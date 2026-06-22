@@ -377,6 +377,19 @@ const PRIMER_STEPS=[
 ];
 const PRIMER_NOTE="Tap <b>Start</b> to run it hands-free in the Timer. <b>Go gentle on Mon &amp; Sat mornings.</b>";
 
+/* per-day warm-up / cooldown (only the days that need one) */
+const WARMUP={
+  Mon:{title:"Warm-up",note:"~5 min before you load the legs.",items:[
+    ["Easy rope or march","2–3 min"],["Leg swings (front + side)","10 / side"],
+    ["Bodyweight squats","15"],["Glute bridges","15"],["Walking lunges","8 / side"]]},
+};
+const COOLDOWN={
+  Mon:{title:"Cooldown",note:"~5 min stretch to finish.",items:[
+    ["Hip-flexor / couch stretch","1 min / side"],["Standing quad stretch","30s / side"],
+    ["Seated hamstring stretch","1 min / side"],["Figure-4 glute stretch","1 min / side"],
+    ["Calf stretch on wall","30s / side"]]},
+};
+
 const DEFAULT_PLAN={
   Mon:{t:"Home Legs",tag:"Kettlebell",items:[
     ["Goblet squat","3 × 8–12"],["KB Romanian deadlift","3 × 8–12"],
@@ -460,7 +473,13 @@ function renderPills(){[...daysEl.children].forEach((p,i)=>{
 
 function lastLog(id){const h=logs[id];return h&&h.length?h[h.length-1]:null;}
 function progress(keys){const done=keys.filter(k=>store.checks[k]).length;return{done,total:keys.length,pct:keys.length?Math.round(done/keys.length*100):0};}
-function resetDay(d){plan[d].items.forEach(it=>delete store.checks[it.id]);PRIMER_STEPS.forEach((_,i)=>delete store.checks[`${d}-p-${i}`]);saveChecks();}
+function resetDay(d){
+  plan[d].items.forEach(it=>delete store.checks[it.id]);
+  PRIMER_STEPS.forEach((_,i)=>delete store.checks[`${d}-p-${i}`]);
+  (WARMUP[d]?.items||[]).forEach((_,i)=>delete store.checks[`${d}-w-${i}`]);
+  (COOLDOWN[d]?.items||[]).forEach((_,i)=>delete store.checks[`${d}-c-${i}`]);
+  saveChecks();
+}
 
 const CHECK_SVG='<svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg>';
 function exRow(it){
@@ -509,6 +528,23 @@ function primerRow(i,s){
     <span class="ex-main"><span class="ex-name">${s.name}</span><span class="ex-detail">${s.sub} · ${fmt(s.time)}</span></span>
   </button>`;
 }
+function simpleRow(key,name,detail){
+  const done=!!store.checks[key];
+  return `<button class="ex primer${done?" done":""}" data-pk="${key}">
+    <span class="check${done?" done":""}">${CHECK_SVG}</span>
+    <span class="ex-main"><span class="ex-name">${name}</span><span class="ex-detail">${detail}</span></span>
+  </button>`;
+}
+function sectionCard(d,kind,data){
+  const def=data[d]; if(!def)return "";
+  const keys=def.items.map((_,i)=>`${d}-${kind}-${i}`), pr=progress(keys);
+  return `<h1 class="section">${def.title}</h1>
+    <div class="card">
+      <div class="prog"><span>${pr.done}/${pr.total}</span><span class="bar"><i style="width:${pr.pct}%"></i></span></div>
+      ${def.items.map((it,i)=>simpleRow(`${d}-${kind}-${i}`,it[0],it[1])).join("")}
+      <div class="note">${def.note}</div>
+    </div>`;
+}
 function renderDay(){
   const d=DAYS[sel], p=plan[d];
   const mp=progress(p.items.map(it=>it.id));
@@ -534,7 +570,9 @@ function renderDay(){
       <span class="ed-label">${editMode?"Editing "+d:""}</span>
       <button class="edit-btn" id="editToggle">${editMode?"Done":"Edit"}</button>
     </div>
+    ${editMode?"":sectionCard(d,"w",WARMUP)}
     ${mainCard}
+    ${editMode?"":sectionCard(d,"c",COOLDOWN)}
     <h1 class="section">Morning primer</h1>
     <div class="card">
       <div class="prog"><span>${pp.done}/${pp.total}</span><span class="bar"><i style="width:${pp.pct}%"></i></span></div>
