@@ -602,9 +602,20 @@ const FOODS_SEED=[
   {id:"honey",name:"Honey",unit:"g",per:100,p:0,c:82,f:0,serv:20},
   {id:"peach",name:"Peach",unit:"pc",per:1,p:1,c:15,f:0.3,serv:1},
   {id:"banana",name:"Banana",unit:"pc",per:1,p:1.3,c:27,f:0.4,serv:1},
+  {id:"apple",name:"Apple",unit:"pc",per:1,p:0.5,c:25,f:0.3,serv:1},
+  {id:"pear",name:"Pear",unit:"pc",per:1,p:0.7,c:27,f:0.2,serv:1},
+  {id:"kiwi",name:"Kiwi",unit:"pc",per:1,p:0.8,c:10,f:0.4,serv:1},
+  {id:"blueberry",name:"Blueberries",unit:"g",per:100,p:0.7,c:14,f:0.3,serv:100},
+  {id:"strawberry",name:"Strawberries",unit:"g",per:100,p:0.7,c:8,f:0.3,serv:150},
+  {id:"watermelon",name:"Watermelon",unit:"g",per:100,p:0.6,c:8,f:0.2,serv:200},
 ];
-let foods=JSON.parse(localStorage.getItem("fit-foods-v1")||"null")||FOODS_SEED.map(x=>({...x}));
+let foods=JSON.parse(localStorage.getItem("fit-foods-v1")||"null")||[];
+const _seeded=new Set(JSON.parse(localStorage.getItem("fit-foods-seeded")||"[]"));
+const _have=new Set(foods.map(f=>f.id));
+FOODS_SEED.forEach(s=>{if(!_have.has(s.id)&&!_seeded.has(s.id))foods.push({...s});}); // add seed foods not seen before
+localStorage.setItem("fit-foods-seeded",JSON.stringify([...new Set([...FOODS_SEED.map(s=>s.id),..._seeded])]));
 const saveFoods=()=>localStorage.setItem("fit-foods-v1",JSON.stringify(foods));
+saveFoods();
 const foodById=id=>foods.find(f=>f.id===id);
 
 /* 3 rotating Mediterranean days — meals as [foodId, amount] */
