@@ -195,6 +195,19 @@
     transition:transform .35s var(--ease)}
   .primer-start:active{transform:scale(.97)}
   .primer-start svg{width:17px;height:17px;fill:#fff}
+  .rounds-builder{width:100%;max-width:380px;margin-top:22px;padding-top:18px;border-top:.5px solid var(--sep)}
+  .rb-title{font-size:13px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;text-align:center;margin-bottom:8px}
+  .rb-row{display:flex;align-items:center;justify-content:space-between;padding:8px 4px;font-size:16px;font-weight:560}
+  .stepper{display:flex;align-items:center;gap:14px}
+  .stepper button{width:34px;height:34px;border-radius:50%;background:var(--surface);box-shadow:var(--shadow);font-size:20px;line-height:1;display:grid;place-items:center;transition:transform .3s var(--ease)}
+  .stepper button:active{transform:scale(.85)}
+  .stepper b{min-width:56px;text-align:center;font-variant-numeric:tabular-nums;font-weight:700}
+  .rb-mixed{display:block;margin:12px auto 0;padding:8px 16px;border-radius:11px;background:var(--surface-2);color:var(--text-2);font-weight:600;font-size:14px;transition:background-color .3s var(--ease),color .3s var(--ease)}
+  .rb-mixed.on{background:var(--accent-soft);color:var(--accent)}
+  .rb-mixed-list{margin-top:8px;max-height:300px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .rb-mrow{display:flex;align-items:center;justify-content:space-between;padding:6px 4px;font-size:15px}
+  .rb-start{display:block;width:100%;margin-top:16px;padding:14px;border-radius:13px;background:var(--accent);color:#fff;font-weight:700;font-size:16px;box-shadow:var(--shadow);transition:transform .35s var(--ease)}
+  .rb-start:active{transform:scale(.97)}
 
   /* ---- targets ---- */
   .stat{display:flex;align-items:center;justify-content:space-between;padding:18px 16px;border-top:.5px solid var(--sep);gap:14px}
@@ -317,6 +330,15 @@
           <button class="ctl" id="rightBtn" aria-label="Next" hidden></button>
         </div>
         <div class="adjust" id="adjust"><button data-d="-15">−15s</button><button data-d="15">+15s</button></div>
+        <div class="rounds-builder" id="roundsBuilder">
+          <div class="rb-title">Rounds workout</div>
+          <div class="rb-row"><span>Rounds</span><div class="stepper"><button data-rb="rounds-">−</button><b id="rbRounds">12</b><button data-rb="rounds+">+</button></div></div>
+          <div class="rb-row" id="rbWorkRow"><span>Work</span><div class="stepper"><button data-rb="work-">−</button><b id="rbWork">1:00</b><button data-rb="work+">+</button></div></div>
+          <div class="rb-row"><span>Rest</span><div class="stepper"><button data-rb="rest-">−</button><b id="rbRest">0:30</b><button data-rb="rest+">+</button></div></div>
+          <button class="rb-mixed" id="rbMixedToggle">Mixed times per round</button>
+          <div class="rb-mixed-list" id="rbMixedList" hidden></div>
+          <button class="rb-start" id="rbStart">Start workout</button>
+        </div>
         <button class="exit-g" id="exitG" hidden>End workout</button>
       </div>
     </section>
@@ -791,7 +813,7 @@ function start(){if(remaining<=0)remaining=timer.dur*1000;running=true;endAt=Dat
 function pause(){running=false;remaining=endAt-Date.now();clearInterval(tick);releaseWake();renderTimer();}
 function finish(){
   if(guided){beep(1);if(navigator.vibrate)navigator.vibrate(120);
-    if(guided.idx<PRIMER_STEPS.length-1){loadStep(guided.idx+1);start();}else finishGuided();return;}
+    if(guided.idx<guided.steps.length-1){loadStep(guided.idx+1);start();}else finishGuided();return;}
   beep(3);if(navigator.vibrate)navigator.vibrate([180,90,180]);releaseWake();
   document.getElementById("ring").classList.add("done");
 }
@@ -814,29 +836,73 @@ const $=id=>document.getElementById(id);
 function setTimerMode(){
   const g=!!guided;
   $("gHead").hidden=!g; $("gNext").hidden=!g; $("exitG").hidden=!g;
-  $("chips").hidden=g; $("adjust").hidden=g; $("rightBtn").hidden=!g;
+  $("chips").hidden=g; $("adjust").hidden=g; $("roundsBuilder").hidden=g; $("rightBtn").hidden=!g;
   $("leftBtn").innerHTML=g?PREV_SVG:RESET_SVG; $("rightBtn").innerHTML=NEXT_SVG;
 }
-function startGuided(){guided={idx:0};setTimerMode();showTab("timer");ensureAudio();loadStep(0);start();}
+/* generic runner: steps = [{name, sub, time, head?}], opts = {onDone, doneMsg} */
+function runSteps(steps,opts){
+  if(!steps.length)return; opts=opts||{};
+  guided={idx:0,steps,onDone:opts.onDone,doneMsg:opts.doneMsg};
+  setTimerMode();showTab("timer");ensureAudio();loadStep(0);start();
+}
 function loadStep(i){
-  guided.idx=i; const s=PRIMER_STEPS[i];
-  timer.dur=s.time; timer.label=s.sub; remaining=s.time*1000;
-  $("gStep").textContent=`Step ${i+1} of ${PRIMER_STEPS.length}`;
+  guided.idx=i; const s=guided.steps[i];
+  timer.dur=s.time; timer.label=s.sub||""; remaining=s.time*1000;
+  $("gStep").textContent=s.head||`Step ${i+1} of ${guided.steps.length}`;
   $("gName").textContent=s.name;
-  const nx=PRIMER_STEPS[i+1];
+  const nx=guided.steps[i+1];
   $("gNext").textContent=nx?`Up next · ${nx.name}`:"Last one — finish strong";
   $("ring").classList.remove("done"); renderTimer();
 }
-function nextStep(){if(!guided)return;guided.idx<PRIMER_STEPS.length-1?(loadStep(guided.idx+1),start()):finishGuided();}
+function nextStep(){if(!guided)return;guided.idx<guided.steps.length-1?(loadStep(guided.idx+1),start()):finishGuided();}
 function prevStep(){if(!guided)return;loadStep(Math.max(0,guided.idx-1));start();}
 function finishGuided(){
   running=false;clearInterval(tick);releaseWake();beep(3);
   if(navigator.vibrate)navigator.vibrate([200,100,200,100,300]);
-  PRIMER_STEPS.forEach((_,i)=>store.checks[`${DAYS[sel]}-p-${i}`]=1);saveChecks();renderDay();
-  $("gStep").textContent="Complete";$("gName").textContent="Primer done 💪";$("gNext").textContent="";
+  if(guided&&guided.onDone)guided.onDone();
+  $("gStep").textContent="Complete";$("gName").textContent=(guided&&guided.doneMsg)||"Workout complete 💪";$("gNext").textContent="";
   $("ring").classList.add("done");$("playBtn").innerHTML=PLAY;
 }
 function exitGuided(){guided=null;running=false;clearInterval(tick);releaseWake();setTimerMode();setDur(180,"Round");}
+function startGuided(){
+  runSteps(PRIMER_STEPS.map(s=>({name:s.name,sub:s.sub,time:s.time})),
+    {doneMsg:"Primer done 💪",onDone:()=>{PRIMER_STEPS.forEach((_,i)=>store.checks[`${DAYS[sel]}-p-${i}`]=1);saveChecks();renderDay();}});
+}
+
+/* rounds workout builder */
+let rbRounds=12,rbWork=60,rbRest=30,rbMixed=false,rbTimes=[];
+function rbSync(){while(rbTimes.length<rbRounds)rbTimes.push(rbWork);if(rbTimes.length>rbRounds)rbTimes.length=rbRounds;}
+function renderRounds(){
+  $("rbRounds").textContent=rbRounds;
+  $("rbWork").textContent=fmt(rbWork);
+  $("rbRest").textContent=rbRest?fmt(rbRest):"none";
+  $("rbMixedToggle").classList.toggle("on",rbMixed);
+  $("rbWorkRow").style.display=rbMixed?"none":"";
+  const list=$("rbMixedList"); list.hidden=!rbMixed;
+  if(rbMixed){rbSync();list.innerHTML=rbTimes.map((t,i)=>`<div class="rb-mrow"><span>Round ${i+1}</span><div class="stepper"><button data-rbm="${i}:-">−</button><b>${fmt(t)}</b><button data-rbm="${i}:+">+</button></div></div>`).join("");}
+}
+function startRounds(){
+  const times=rbMixed?(rbSync(),rbTimes.slice()):Array(rbRounds).fill(rbWork);
+  const steps=[];
+  times.forEach((t,i)=>{
+    steps.push({name:`Round ${i+1}`,sub:`${times.length} rounds`,time:t,head:`Round ${i+1} / ${times.length}`});
+    if(rbRest>0&&i<times.length-1)steps.push({name:"Rest",sub:`before round ${i+2}`,time:rbRest,head:"Rest"});
+  });
+  runSteps(steps,{doneMsg:"Rounds complete 💪"});
+}
+$("roundsBuilder").addEventListener("click",e=>{
+  const rb=e.target.closest("[data-rb]");
+  if(rb){const k=rb.dataset.rb;
+    if(k==="rounds+"&&rbRounds<30)rbRounds++; else if(k==="rounds-"&&rbRounds>1)rbRounds--;
+    else if(k==="work+")rbWork+=15; else if(k==="work-"&&rbWork>15)rbWork-=15;
+    else if(k==="rest+")rbRest+=15; else if(k==="rest-"&&rbRest>0)rbRest-=15;
+    renderRounds();return;}
+  const rbm=e.target.closest("[data-rbm]");
+  if(rbm){const[i,op]=rbm.dataset.rbm.split(":");const k=+i;rbSync();
+    if(op==="+")rbTimes[k]+=15; else if(rbTimes[k]>15)rbTimes[k]-=15; renderRounds();return;}
+  if(e.target.closest("#rbMixedToggle")){rbMixed=!rbMixed;renderRounds();return;}
+  if(e.target.closest("#rbStart")){startRounds();return;}
+});
 
 $("playBtn").onclick=()=>{ensureAudio();running?pause():start();};
 $("leftBtn").onclick=()=>guided?prevStep():setDur(timer.dur);
@@ -844,7 +910,7 @@ $("rightBtn").onclick=()=>{if(guided)nextStep();};
 $("exitG").onclick=exitGuided;
 chipsEl.addEventListener("click",e=>{const c=e.target.closest(".chip");if(c)setDur(+c.dataset.s,c.dataset.lab);});
 document.querySelectorAll(".adjust button").forEach(b=>b.onclick=()=>{if(running)return;setDur(Math.max(15,timer.dur+ +b.dataset.d));});
-setTimerMode();
+setTimerMode();renderRounds();
 
 /* ---------- init ---------- */
 renderPills();renderDay();renderTimer();renderFood();
