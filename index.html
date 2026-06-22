@@ -201,6 +201,72 @@
   .stat .v small{font-size:14px;font-weight:600;color:var(--text-2)}
   h1.section{font-size:15px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.05em;margin:22px 4px 0}
 
+  /* ---- nutrition ---- */
+  .food-summary{padding:16px}
+  .kcal-row{display:flex;align-items:baseline;justify-content:space-between}
+  .kcal-big{font-size:30px;font-weight:750;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .kcal-big small{font-size:15px;font-weight:600;color:var(--text-2)}
+  .kcal-bar{height:6px;border-radius:3px;background:var(--surface-2);overflow:hidden;margin:12px 0 18px}
+  .kcal-bar i{display:block;height:100%;background:var(--accent);border-radius:3px;transition:width .55s var(--ease)}
+  .rings{display:flex;justify-content:space-around;gap:6px}
+  .mring{display:flex;flex-direction:column;align-items:center;gap:7px;flex:1}
+  .ring-box{position:relative;width:64px;height:64px}
+  .ring-box svg{width:64px;height:64px;transform:rotate(-90deg)}
+  .ring-box circle{fill:none;stroke-width:6}
+  .ring-box .mt{stroke:var(--surface-2)}
+  .ring-box .mf{stroke-linecap:round;transition:stroke-dashoffset .55s var(--ease)}
+  .ring-box .v{position:absolute;inset:0;display:grid;place-items:center;font-size:16px;font-weight:700;font-variant-numeric:tabular-nums}
+  .mr-lab{font-size:12px;color:var(--text);text-align:center;line-height:1.35;font-weight:600}
+  .mr-lab span{color:var(--text-2);font-weight:500}
+  .t-edit{display:flex;flex-direction:column;gap:10px;padding:16px}
+  .t-edit label{display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:560}
+  .t-edit input{width:120px;padding:9px 10px;border-radius:9px;background:var(--surface-2);border:0;color:var(--text);font:inherit;text-align:right;font-variant-numeric:tabular-nums}
+  .seg{display:flex;gap:6px;background:var(--surface-2);padding:4px;border-radius:12px;margin:10px 0}
+  .seg-b{flex:1;padding:9px;border-radius:9px;font-size:14px;font-weight:600;color:var(--text-2);transition:transform .3s var(--ease),background-color .3s,color .3s}
+  .seg-b:active{transform:scale(.95)}
+  .seg-b.on{background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+  .pmeal{display:flex;align-items:center;gap:10px;padding:12px 16px;border-top:.5px solid var(--sep)}
+  .pmeal:first-child{border-top:0}
+  .pmeal-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+  .pmeal-name{font-size:15px;font-weight:600}
+  .pmeal-items{font-size:12px;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pmeal-mac{font-size:12px;color:var(--text-2);text-align:right;font-variant-numeric:tabular-nums;line-height:1.3;white-space:nowrap}
+  .pmeal-log{flex:0 0 36px;width:36px;height:36px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-size:22px;line-height:1;display:grid;place-items:center;transition:transform .35s var(--ease)}
+  .pmeal-log:active{transform:scale(.85)}
+  .lslot{border-top:.5px solid var(--sep);padding:11px 16px 13px}
+  .lslot:first-child{border-top:0}
+  .lslot-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px}
+  .lslot-head span:first-child{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-2)}
+  .lslot-sub{font-size:12px;color:var(--text-2);font-variant-numeric:tabular-nums}
+  .lentry{display:flex;align-items:center;gap:8px;padding:6px 0}
+  .le-name{flex:1;min-width:0;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .le-amt{width:52px;padding:5px 6px;border-radius:8px;background:var(--surface-2);border:0;color:var(--text);font:inherit;font-size:14px;text-align:right;font-variant-numeric:tabular-nums;-moz-appearance:textfield}
+  .le-amt::-webkit-outer-spin-button,.le-amt::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .le-unit{font-size:12px;color:var(--text-2);width:16px}
+  .le-mac{font-size:12px;color:var(--text-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .le-x{color:var(--text-2);font-size:18px;line-height:1;padding:0 2px}
+  .lslot-add{margin-top:6px;color:var(--accent);font-weight:600;font-size:14px;padding:6px 0}
+  .lslot-add:active{opacity:.5}
+  .picker{margin-top:8px;background:var(--surface-2);border-radius:12px;padding:8px;animation:slideD .3s var(--ease)}
+  .pk-list{max-height:240px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .pk-item{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;text-align:left;padding:9px 8px;border-radius:8px;transition:background-color .2s}
+  .pk-item:active{background:var(--sep)}
+  .pk-item span{font-size:14px;font-weight:560}
+  .pk-item small{font-size:11px;color:var(--text-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .pk-custom{width:100%;text-align:center;padding:11px;color:var(--accent);font-weight:600;font-size:14px;margin-top:4px;border-top:.5px solid var(--sep)}
+  .pk-custom:active{opacity:.5}
+  .cform{padding:8px 4px 4px;display:flex;flex-direction:column;gap:8px}
+  .cform input{background:var(--surface);border:0;border-radius:8px;padding:9px 10px;color:var(--text);font:inherit;font-size:14px}
+  .cf-row{display:flex;gap:6px}
+  .cf-row input{flex:1;min-width:0;text-align:center}
+  .cf-save{font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:8px}
+  .cf-add{background:var(--accent);color:#fff;border:0;border-radius:9px;padding:11px;font-weight:600;font-size:15px;transition:transform .35s var(--ease)}
+  .cf-add:active{transform:scale(.97)}
+  .mfood{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 16px;border-top:.5px solid var(--sep);font-size:15px}
+  .mfood:first-child{border-top:0}
+  .mfood small{color:var(--text-2);font-size:12px;font-weight:500}
+  .mf-x{color:var(--danger);font-size:18px;line-height:1;padding:0 4px;flex:0 0 auto}
+
   /* ---- tab bar ---- */
   .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;
     padding:8px var(--pad) calc(8px + env(safe-area-inset-bottom));
@@ -251,6 +317,8 @@
       </div>
     </section>
 
+    <section class="view" id="v-food" hidden></section>
+
     <section class="view" id="v-targets" hidden>
       <h1 class="section">Daily targets</h1>
       <div class="card" id="targetCard"></div>
@@ -261,6 +329,7 @@
 
   <nav class="tabbar" id="tabs">
     <button class="tab active" data-v="plan"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><span>Plan</span></button>
+    <button class="tab" data-v="food"><svg viewBox="0 0 24 24"><path d="M6 3v7a2 2 0 0 0 4 0V3M8 11v10M18 3c-1.7 0-3 2.2-3 5.5S16.3 14 18 14v7"/></svg><span>Food</span></button>
     <button class="tab" data-v="timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg><span>Timer</span></button>
     <button class="tab" data-v="targets"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg><span>Targets</span></button>
   </nav>
@@ -489,12 +558,192 @@ document.getElementById("howCard").innerHTML=`
   <div class="stat"><div class="k">Progression<span>Tap an exercise to log weight × reps. Beat last week — one rep or a little more weight.</span></div></div>
   <div class="stat"><div class="k">Tracking<span>Log protein + rough calories for 3 weeks, then eyeball your portions.</span></div></div>`;
 
+/* ===================== NUTRITION (Food tab) ===================== */
+const SLOTS=["Breakfast","Snack 1","Lunch","Snack 2","Dinner"];
+const kcalc=(p,c,f)=>Math.round(p*4+c*4+f*9);
+
+const MACRO_DEFAULT={p:190,c:300,f:90,kcal:2800};
+let targets=Object.assign({},MACRO_DEFAULT,JSON.parse(localStorage.getItem("fit-targets-v1")||"null"));
+const saveTargets=()=>localStorage.setItem("fit-targets-v1",JSON.stringify(targets));
+
+/* library — macros given per `per` (g or piece). serv = default serving */
+const FOODS_SEED=[
+  {id:"yog",name:"Greek yogurt 2%",unit:"g",per:100,p:10,c:4,f:2,serv:200},
+  {id:"egg",name:"Egg",unit:"pc",per:1,p:6.3,c:0.4,f:4.8,serv:2},
+  {id:"chick",name:"Chicken breast",unit:"g",per:100,p:31,c:0,f:3.6,serv:150},
+  {id:"chickth",name:"Chicken thigh",unit:"g",per:100,p:26,c:0,f:10,serv:150},
+  {id:"pork",name:"Lean pork (souvlaki)",unit:"g",per:100,p:27,c:0,f:8,serv:150},
+  {id:"beef",name:"Lean beef",unit:"g",per:100,p:26,c:0,f:10,serv:150},
+  {id:"turkey",name:"Turkey breast",unit:"g",per:100,p:29,c:0,f:1,serv:150},
+  {id:"feta",name:"Feta",unit:"g",per:100,p:14,c:4,f:21,serv:50},
+  {id:"cottage",name:"Cottage / anthotyro",unit:"g",per:100,p:11,c:3,f:6,serv:100},
+  {id:"rice",name:"Rice, cooked",unit:"g",per:100,p:2.7,c:28,f:0.3,serv:200},
+  {id:"potato",name:"Potatoes, cooked",unit:"g",per:100,p:2,c:20,f:0.1,serv:250},
+  {id:"bread",name:"Bread",unit:"g",per:100,p:9,c:49,f:3,serv:60},
+  {id:"pita",name:"Pita",unit:"pc",per:1,p:6,c:40,f:3,serv:1},
+  {id:"rusk",name:"Rusk (paximadi)",unit:"pc",per:1,p:3,c:18,f:2,serv:1},
+  {id:"oats",name:"Oats",unit:"g",per:100,p:13,c:60,f:7,serv:60},
+  {id:"oliveoil",name:"Olive oil",unit:"g",per:100,p:0,c:0,f:100,serv:15},
+  {id:"olives",name:"Olives",unit:"g",per:100,p:1,c:6,f:15,serv:30},
+  {id:"tomato",name:"Tomato",unit:"g",per:100,p:0.9,c:3.9,f:0.2,serv:150},
+  {id:"cucumber",name:"Cucumber",unit:"g",per:100,p:0.7,c:3.6,f:0.1,serv:100},
+  {id:"horta",name:"Greens (horta)",unit:"g",per:100,p:3,c:4,f:0.4,serv:200},
+  {id:"tzatziki",name:"Tzatziki",unit:"g",per:100,p:3,c:4,f:6,serv:60},
+  {id:"walnuts",name:"Walnuts",unit:"g",per:100,p:15,c:14,f:65,serv:30},
+  {id:"honey",name:"Honey",unit:"g",per:100,p:0,c:82,f:0,serv:20},
+  {id:"peach",name:"Peach",unit:"pc",per:1,p:1,c:15,f:0.3,serv:1},
+  {id:"banana",name:"Banana",unit:"pc",per:1,p:1.3,c:27,f:0.4,serv:1},
+];
+let foods=JSON.parse(localStorage.getItem("fit-foods-v1")||"null")||FOODS_SEED.map(x=>({...x}));
+const saveFoods=()=>localStorage.setItem("fit-foods-v1",JSON.stringify(foods));
+const foodById=id=>foods.find(f=>f.id===id);
+
+/* 3 rotating Mediterranean days — meals as [foodId, amount] */
+const PLANS=[
+  {name:"Chicken",meals:{
+    "Breakfast":[["egg",3],["yog",200],["bread",30],["honey",15]],
+    "Snack 1":[["yog",200],["walnuts",20],["peach",1]],
+    "Lunch":[["chick",180],["rice",200],["tomato",150],["oliveoil",15],["feta",30]],
+    "Snack 2":[["cottage",150],["rusk",1],["tomato",100]],
+    "Dinner":[["chickth",180],["potato",250],["horta",150],["oliveoil",15]]}},
+  {name:"Pork",meals:{
+    "Breakfast":[["oats",60],["yog",200],["honey",15],["banana",1]],
+    "Snack 1":[["egg",2],["tomato",100]],
+    "Lunch":[["pork",180],["pita",1],["tzatziki",60],["tomato",100],["cucumber",100]],
+    "Snack 2":[["yog",200],["walnuts",20]],
+    "Dinner":[["beef",180],["potato",250],["oliveoil",15],["olives",30]]}},
+  {name:"Mixed",meals:{
+    "Breakfast":[["egg",3],["feta",40],["bread",30],["tomato",100]],
+    "Snack 1":[["yog",250],["honey",15],["peach",1]],
+    "Lunch":[["beef",180],["rice",200],["cucumber",100],["oliveoil",15]],
+    "Snack 2":[["cottage",150],["rusk",1],["olives",30]],
+    "Dinner":[["turkey",200],["potato",250],["horta",150],["oliveoil",15]]}},
+];
+
+let foodLog=JSON.parse(localStorage.getItem("fit-food-log-v1")||"{}");
+const saveFoodLog=()=>localStorage.setItem("fit-food-log-v1",JSON.stringify(foodLog));
+const fToday=()=>new Date().toISOString().slice(0,10);
+function todayLog(){const k=fToday();if(!foodLog[k])foodLog[k]={};SLOTS.forEach(s=>{if(!foodLog[k][s])foodLog[k][s]=[];});return foodLog[k];}
+
+const servMac=it=>{const k=it.serv/it.per;return{p:it.p*k,c:it.c*k,f:it.f*k};};
+const entryMac=e=>{const k=e.amt/e.base;return{p:e.p*k,c:e.c*k,f:e.f*k};};
+function slotTot(slot){return todayLog()[slot].reduce((t,e)=>{const m=entryMac(e);t.p+=m.p;t.c+=m.c;t.f+=m.f;return t;},{p:0,c:0,f:0});}
+function dayTot(){const t={p:0,c:0,f:0};SLOTS.forEach(s=>{const st=slotTot(s);t.p+=st.p;t.c+=st.c;t.f+=st.f;});return t;}
+function addToSlot(slot,it,amt){todayLog()[slot].push({name:it.name,unit:it.unit,base:it.per,p:it.p,c:it.c,f:it.f,amt:amt||it.serv});saveFoodLog();}
+
+let planIdx=0,pickerSlot=null,customOpen=null,tEdit=false;
+const foodView=document.getElementById("v-food");
+
+function ring(val,target,color,label){
+  const r=26,c=2*Math.PI*r,frac=target?Math.min(1,val/target):0;
+  return `<div class="mring"><div class="ring-box">
+    <svg viewBox="0 0 64 64"><circle class="mt" cx="32" cy="32" r="${r}"></circle><circle class="mf" cx="32" cy="32" r="${r}" style="stroke:${color};stroke-dasharray:${c};stroke-dashoffset:${c*(1-frac)}"></circle></svg>
+    <div class="v">${Math.round(val)}</div></div>
+    <div class="mr-lab">${label}<br><span>/ ${target}g</span></div></div>`;
+}
+function picker(slot){
+  return `<div class="picker"><div class="pk-list">${foods.map(f=>{const m=servMac(f);return `<button class="pk-item" data-add="${f.id}" data-slot="${slot}"><span>${esc(f.name)}</span><small>${f.serv}${f.unit==="pc"?"pc":"g"} · ${kcalc(m.p,m.c,m.f)} kcal · ${Math.round(m.p)}P</small></button>`;}).join("")}</div>
+    <button class="pk-custom" data-custom="${slot}">+ Custom entry</button>
+    ${customOpen===slot?customForm(slot):""}</div>`;
+}
+function customForm(slot){
+  return `<div class="cform">
+    <input data-cf="name" placeholder="Food name">
+    <div class="cf-row"><input data-cf="amt" type="number" inputmode="decimal" placeholder="g"><input data-cf="p" type="number" inputmode="decimal" placeholder="P"><input data-cf="c" type="number" inputmode="decimal" placeholder="C"><input data-cf="f" type="number" inputmode="decimal" placeholder="F"></div>
+    <label class="cf-save"><input type="checkbox" data-cf="save"> Save to my foods</label>
+    <button class="cf-add" data-cfadd="${slot}">Add to ${slot}</button></div>`;
+}
+function renderFood(){
+  const d=dayTot(), kc=kcalc(d.p,d.c,d.f), kfrac=Math.min(1,targets.kcal?kc/targets.kcal:0);
+  const summary = tEdit ? `
+    <div class="card"><div class="t-edit">
+      <label>Protein (g)<input data-t="p" type="number" inputmode="numeric" value="${targets.p}"></label>
+      <label>Carbs (g)<input data-t="c" type="number" inputmode="numeric" value="${targets.c}"></label>
+      <label>Fat (g)<input data-t="f" type="number" inputmode="numeric" value="${targets.f}"></label>
+      <label>Calories<input data-t="kcal" type="number" inputmode="numeric" value="${targets.kcal}"></label>
+      <button class="cf-add" id="saveTargets">Save targets</button>
+    </div></div>` : `
+    <div class="card food-summary">
+      <div class="kcal-row"><div class="kcal-big">${kc}<small> / ${targets.kcal} kcal</small></div><button class="edit-btn" id="editTargets">Edit</button></div>
+      <div class="kcal-bar"><i style="width:${kfrac*100}%"></i></div>
+      <div class="rings">${ring(d.p,targets.p,"var(--accent)","Protein")}${ring(d.c,targets.c,"#0A84FF","Carbs")}${ring(d.f,targets.f,"#FF9F0A","Fat")}</div>
+    </div>`;
+
+  const plan=PLANS[planIdx];
+  const planCard=`<div class="card">${SLOTS.map(slot=>{
+    const items=plan.meals[slot]||[];
+    const tot=items.reduce((t,[id,amt])=>{const it=foodById(id);if(it){const k=amt/it.per;t.p+=it.p*k;t.c+=it.c*k;t.f+=it.f*k;}return t;},{p:0,c:0,f:0});
+    const names=items.map(([id])=>{const it=foodById(id);return it?it.name:null;}).filter(Boolean).join(", ");
+    return `<div class="pmeal"><div class="pmeal-info"><span class="pmeal-name">${slot}</span><span class="pmeal-items">${esc(names)}</span></div>
+      <span class="pmeal-mac">${kcalc(tot.p,tot.c,tot.f)} kcal<br>${Math.round(tot.p)}g P</span>
+      <button class="pmeal-log" data-logmeal="${slot}" aria-label="Log ${slot}">+</button></div>`;
+  }).join("")}</div>`;
+
+  const logCard=`<div class="card">${SLOTS.map(slot=>{
+    const entries=todayLog()[slot], st=slotTot(slot);
+    return `<div class="lslot">
+      <div class="lslot-head"><span>${slot}</span><span class="lslot-sub">${entries.length?kcalc(st.p,st.c,st.f)+" kcal · "+Math.round(st.p)+"g P":""}</span></div>
+      ${entries.map((e,i)=>{const m=entryMac(e);return `<div class="lentry">
+        <span class="le-name">${esc(e.name)}</span>
+        <input class="le-amt" type="number" inputmode="decimal" value="${e.amt}" data-slot="${slot}" data-i="${i}"><span class="le-unit">${e.unit==="pc"?"pc":"g"}</span>
+        <span class="le-mac">${kcalc(m.p,m.c,m.f)} · ${Math.round(m.p)}P</span>
+        <button class="le-x" data-del-slot="${slot}" data-del-i="${i}" aria-label="Remove">×</button></div>`;}).join("")}
+      <button class="lslot-add" data-addslot="${slot}">+ Add food</button>
+      ${pickerSlot===slot?picker(slot):""}
+    </div>`;
+  }).join("")}</div>`;
+
+  const manageCard=`<div class="card">${foods.map(f=>`<div class="mfood"><span>${esc(f.name)} <small>${f.serv}${f.unit==="pc"?" pc":" g"} · ${Math.round(servMac(f).p)}P</small></span><button class="mf-x" data-delfood="${f.id}" aria-label="Delete">×</button></div>`).join("")}</div>`;
+
+  foodView.innerHTML=`
+    <h1 class="section">Today's macros</h1>
+    ${summary}
+    <h1 class="section">Suggested plan</h1>
+    <div class="seg">${PLANS.map((p,i)=>`<button class="seg-b${i===planIdx?" on":""}" data-plan="${i}">${esc(p.name)}</button>`).join("")}</div>
+    ${planCard}
+    <h1 class="section">Today's log</h1>
+    ${logCard}
+    <h1 class="section">My foods</h1>
+    ${manageCard}`;
+}
+function addCustom(slot){
+  const root=foodView.querySelector(".cform"); if(!root)return;
+  const g=s=>root.querySelector(s);
+  const name=(g('[data-cf="name"]').value||"").trim()||"Custom";
+  const amt=parseFloat(g('[data-cf="amt"]').value)||1;
+  const p=parseFloat(g('[data-cf="p"]').value)||0, c=parseFloat(g('[data-cf="c"]').value)||0, f=parseFloat(g('[data-cf="f"]').value)||0;
+  const save=g('[data-cf="save"]').checked;
+  todayLog()[slot].push({name,unit:"g",base:amt,p,c,f,amt});
+  if(save)foods.push({id:uid(),name,unit:"g",per:amt,p,c,f,serv:amt}),saveFoods();
+  saveFoodLog(); customOpen=null; renderFood();
+}
+foodView.addEventListener("click",e=>{
+  const pick=s=>e.target.closest(s); let b;
+  if(e.target.id==="editTargets"){tEdit=true;renderFood();return;}
+  if(e.target.id==="saveTargets"){["p","c","f","kcal"].forEach(k=>{const v=parseFloat(foodView.querySelector(`[data-t="${k}"]`).value);if(v>0)targets[k]=v;});saveTargets();tEdit=false;renderFood();return;}
+  if(b=pick("[data-plan]")){planIdx=+b.dataset.plan;renderFood();return;}
+  if(b=pick("[data-logmeal]")){const s=b.dataset.logmeal;PLANS[planIdx].meals[s].forEach(([id,amt])=>{const it=foodById(id);if(it)addToSlot(s,it,amt);});renderFood();return;}
+  if(b=pick("[data-addslot]")){const s=b.dataset.addslot;pickerSlot=pickerSlot===s?null:s;customOpen=null;renderFood();return;}
+  if(b=pick("[data-add]")){const it=foodById(b.dataset.add);if(it)addToSlot(b.dataset.slot,it);renderFood();return;}
+  if(b=pick("[data-custom]")){const s=b.dataset.custom;customOpen=customOpen===s?null:s;renderFood();return;}
+  if(b=pick("[data-cfadd]")){addCustom(b.dataset.cfadd);return;}
+  if(b=pick("[data-del-slot]")){todayLog()[b.dataset.delSlot].splice(+b.dataset.delI,1);saveFoodLog();renderFood();return;}
+  if(b=pick("[data-delfood]")){foods=foods.filter(f=>f.id!==b.dataset.delfood);saveFoods();renderFood();return;}
+});
+foodView.addEventListener("change",e=>{
+  if(!e.target.classList.contains("le-amt"))return;
+  const v=parseFloat(e.target.value);
+  if(v>=0){todayLog()[e.target.dataset.slot][+e.target.dataset.i].amt=v;saveFoodLog();}
+  renderFood();
+});
+
 /* ---------- tabs ---------- */
 function showTab(name){
   document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.dataset.v===name));
   document.querySelectorAll(".view").forEach(v=>v.hidden=true);
   const view=document.getElementById("v-"+name);
   view.hidden=false; view.style.animation="none"; view.offsetHeight; view.style.animation="";
+  if(name==="food")renderFood();
 }
 document.getElementById("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(t)showTab(t.dataset.v);});
 
@@ -578,7 +827,7 @@ document.querySelectorAll(".adjust button").forEach(b=>b.onclick=()=>{if(running
 setTimerMode();
 
 /* ---------- init ---------- */
-renderPills();renderDay();renderTimer();
+renderPills();renderDay();renderTimer();renderFood();
 const todayPill=daysEl.children[todayIdx]; if(todayPill)todayPill.scrollIntoView({inline:"center",block:"nearest"});
 </script>
 </body>
