@@ -28,6 +28,7 @@
     --blur:rgba(0,0,0,.6);
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none!important} /* class selectors below override UA [hidden]; this keeps .hidden working */
   html,body{margin:0}
   body{
     min-height:100dvh;
@@ -338,6 +339,11 @@
           <button class="rb-mixed" id="rbMixedToggle">Mixed times per round</button>
           <div class="rb-mixed-list" id="rbMixedList" hidden></div>
           <button class="rb-start" id="rbStart">Start workout</button>
+        </div>
+        <div class="rounds-builder" id="customWorkout">
+          <div class="rb-title">Custom · Full body 20 min</div>
+          <div id="customList"></div>
+          <button class="rb-start" id="customStart">Start workout</button>
         </div>
         <button class="exit-g" id="exitG" hidden>End workout</button>
       </div>
@@ -874,7 +880,7 @@ const $=id=>document.getElementById(id);
 function setTimerMode(){
   const g=!!guided;
   $("gHead").hidden=!g; $("gNext").hidden=!g; $("exitG").hidden=!g;
-  $("chips").hidden=g; $("adjust").hidden=g; $("roundsBuilder").hidden=g; $("rightBtn").hidden=!g;
+  $("chips").hidden=g; $("adjust").hidden=g; $("roundsBuilder").hidden=g; $("customWorkout").hidden=g; $("rightBtn").hidden=!g;
   $("leftBtn").innerHTML=g?PREV_SVG:RESET_SVG; $("rightBtn").innerHTML=NEXT_SVG;
 }
 /* generic runner: steps = [{name, sub, time, head?}], opts = {onDone, doneMsg} */
@@ -941,6 +947,30 @@ $("roundsBuilder").addEventListener("click",e=>{
   if(e.target.closest("#rbMixedToggle")){rbMixed=!rbMixed;renderRounds();return;}
   if(e.target.closest("#rbStart")){startRounds();return;}
 });
+
+/* custom full-body workout (bodyweight + jump rope, ~20:00) */
+const CUSTOM={
+  warm:[["Easy jump rope","2:00",120]],
+  round:[["Bodyweight squats","45s",45],["Jump rope","45s",45],["Push-ups","45s",45],
+    ["Jump rope","45s",45],["Reverse lunges","45s",45],["Plank","45s",45],["Rest","30s",30]],
+  rounds:3,
+  finish:[["Mountain climbers","45s",45],["Jump rope","1:00",60],["Cooldown stretch","1:15",75]],
+};
+function customSteps(){
+  const s=[];
+  CUSTOM.warm.forEach(w=>s.push({name:w[0],sub:w[1],time:w[2],head:"Warm-up"}));
+  for(let r=1;r<=CUSTOM.rounds;r++)CUSTOM.round.forEach(m=>s.push({name:m[0],sub:m[1],time:m[2],head:`Round ${r} / ${CUSTOM.rounds}`}));
+  CUSTOM.finish.forEach(f=>s.push({name:f[0],sub:f[1],time:f[2],head:"Finisher"}));
+  return s;
+}
+const cRow=(name,t)=>`<div class="rb-row"><span>${name}</span><b>${fmt(t)}</b></div>`;
+$("customList").innerHTML=
+  CUSTOM.warm.map(w=>cRow("Warm-up · "+w[0],w[2])).join("")
+  +`<div class="rb-title" style="margin-top:14px">${CUSTOM.rounds} rounds</div>`
+  +CUSTOM.round.map(m=>cRow(m[0],m[2])).join("")
+  +`<div class="rb-title" style="margin-top:14px">Finisher</div>`
+  +CUSTOM.finish.map(f=>cRow(f[0],f[2])).join("");
+$("customStart").onclick=()=>runSteps(customSteps(),{doneMsg:"Full body done 💪"});
 
 $("playBtn").onclick=()=>{ensureAudio();running?pause():start();};
 $("leftBtn").onclick=()=>guided?prevStep():setDur(timer.dur);
